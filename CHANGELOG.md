@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.0](https://github.com/worldprinter/tools/compare/v0.1.0...v0.2.0) (2023-05-26)
+
+
+### Features
+
+* change vite build and static-server script ([216eb5b](https://github.com/worldprinter/tools/commit/216eb5b68e3250c1880168d4ab52b95c6ce364f0))
+
 ## 0.1.0 (2023-05-26)
 
 
