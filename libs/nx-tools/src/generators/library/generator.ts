@@ -17,22 +17,12 @@ export async function libraryGenerator(tree: Tree) {
             const targets = project.targets
 
             let hasViteBuild = false
-
             for (const targetKey of Object.keys(targets)) {
                 const target = targets[targetKey]
                 if (target.executor === '@nx/vite:build') {
                     hasViteBuild = true
                     target.options = {
                         ...target.options,
-                        emptyOutDir: true,
-                        sourcemap: true,
-                        minify: true,
-                        manifest: true,
-                        ssrManifest: true,
-                        ssr: true,
-                        logLevel: 'info',
-                        force: true,
-                        cssCodeSplit: true,
                         generatePackageJson: true,
                         includeDevDependenciesInPackageJson: true,
                     }
@@ -40,15 +30,13 @@ export async function libraryGenerator(tree: Tree) {
                 project.targets[targetKey] = target
             }
 
-            if (!project.targets['static:server'] && hasViteBuild) {
+            if (hasViteBuild) {
                 project.targets['static:server'] = {
                     executor: '@nx/vite:preview-server',
                     options: {
                         buildTarget: `${projectsKey}:build`,
-                        port: 3000,
-                        host: '0.0.0.0',
-                        open: false,
-                        logLevel: 'info',
+                        host: true,
+                        watch: true,
                     },
                 }
             }
