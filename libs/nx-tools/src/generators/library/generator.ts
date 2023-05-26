@@ -22,7 +22,7 @@ export async function libraryGenerator(tree: Tree) {
                 if (target.executor === '@nx/vite:build') {
                     hasViteBuild = true
                     target.options = {
-                        ...target.options,
+                        outputPath: target.options.outputPath,
                         generatePackageJson: true,
                         includeDevDependenciesInPackageJson: true,
                     }
