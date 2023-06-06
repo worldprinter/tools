@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.8.1](https://github.com/worldprinter/tools/compare/v0.8.0...v0.8.1) (2023-06-06)
+
+
+### Bug Fixes
+
+* remove .babelrc ([00048cf](https://github.com/worldprinter/tools/commit/00048cf469ad8efb5994a1a64e5cc7d790d57b20))
+
 ## [0.8.0](https://github.com/worldprinter/tools/compare/v0.7.1...v0.8.0) (2023-06-06)
 
 
