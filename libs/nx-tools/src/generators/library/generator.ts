@@ -173,12 +173,12 @@ export default {
 
             updateProjectConfiguration(tree, projectName, project)
 
-            const projectJson = JSON.parse(tree.read(path.join(projectRoot, 'package.json')).toString('utf-8'))
+            const projectJson = JSON.parse(tree.read(path.join(projectRoot, 'project.json')).toString('utf-8'))
 
             if (projectJson.targets && projectJson.targets.build && projectJson.targets.build.options) {
                 if (!projectJson.targets.build.options.outputPath) {
                     projectJson.targets.build.options.outputPath = `dist/${project.root}`
-                    tree.write(path.join(projectRoot, 'package.json'), JSON.stringify(projectJson, null, 2))
+                    tree.write(path.join(projectRoot, 'project.json'), JSON.stringify(projectJson, null, 2))
                 }
             }
         }
