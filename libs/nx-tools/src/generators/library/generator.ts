@@ -28,27 +28,8 @@ export async function libraryGenerator(tree: Tree) {
                     hasBuild = true
                 }
                 if (target.executor === '@nx/vite:build') {
-                    // add .babelrc
-                    tree.write(
-                        path.join(projectRoot, '.babelrc'),
-                        JSON.stringify(
-                            {
-                                presets: [
-                                    [
-                                        '@nx/react/babel',
-                                        {
-                                            runtime: 'automatic',
-                                            useBuiltIns: 'usage',
-                                            importSource: '@emotion/react',
-                                        },
-                                    ],
-                                ],
-                                plugins: ['@emotion/babel-plugin'],
-                            },
-                            null,
-                            2,
-                        ),
-                    )
+                    // has .babelrc remove it
+                    tree.delete(path.join(projectRoot, '.babelrc'))
                     // add jest.config.ts
                     tree.write(
                         path.join(projectRoot, 'jest.config.ts'),
