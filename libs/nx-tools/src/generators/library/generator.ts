@@ -96,7 +96,7 @@ export default {
                     // remove vite.config.ts
                     tree.delete(path.join(projectRoot, 'vite.config.ts'))
 
-                    target = {
+                    project.targets[targetKey] = target = {
                         executor: '@nx/rollup:rollup',
                         outputs: ['{options.outputPath}'],
                         options: {
@@ -128,18 +128,17 @@ export default {
 
             if (hasBuild) {
                 const outputPath = targets['build'].options.outputPath
-                if (!outputPath) {
-                    return
-                }
-                project.targets['static:server'] = {
-                    executor: 'nx:run-commands',
-                    options: {
-                        commands: [
-                            `pnpm nx run ${projectName}:build`,
-                            `http-server ${outputPath} -p ${startPort++} -d -i -g -b --cors -c-1 --log-ip --utc-time`,
-                        ],
-                        parallel: true,
-                    },
+                if (outputPath) {
+                    project.targets['static:server'] = {
+                        executor: 'nx:run-commands',
+                        options: {
+                            commands: [
+                                `pnpm nx run ${projectName}:build`,
+                                `http-server ${outputPath} -p ${startPort++} -d -i -g -b --cors -c-1 --log-ip --utc-time`,
+                            ],
+                            parallel: true,
+                        },
+                    }
                 }
             }
 
