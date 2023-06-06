@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.9.1](https://github.com/worldprinter/tools/compare/v0.9.0...v0.9.1) (2023-06-06)
+
+
+### Bug Fixes
+
+* update ouputPath ([1041924](https://github.com/worldprinter/tools/commit/10419241bc761c9e3fac3dcea522fdf9f9f0d4d7))
+
 ## [0.9.0](https://github.com/worldprinter/tools/compare/v0.8.1...v0.9.0) (2023-06-06)
 
 
