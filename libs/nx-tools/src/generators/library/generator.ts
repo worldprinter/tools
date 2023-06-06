@@ -1,12 +1,14 @@
-import { formatFiles, getProjects, updateProjectConfiguration, type Tree } from '@nx/devkit'
 import * as path from 'path'
+import { formatFiles, getProjects, updateProjectConfiguration, type Tree } from '@nx/devkit'
 
 import { updateEslintConfig } from '../../utils/eslint'
 
+let startPort = 4500
+
 export async function libraryGenerator(tree: Tree) {
     const projects = getProjects(tree)
-    for (const projectsKey of [...projects.keys()]) {
-        const project = projects.get(projectsKey)
+    for (const projectName of [...projects.keys()]) {
+        const project = projects.get(projectName)
         if (project) {
             const projectRoot = project.root
             const eslintConfigPath = path.join(projectRoot, '.eslintrc.json')
@@ -16,32 +18,127 @@ export async function libraryGenerator(tree: Tree) {
 
             const targets = project.targets
 
-            let hasViteBuild = false
+            let hasBuild = false
             for (const targetKey of Object.keys(targets)) {
-                const target = targets[targetKey]
+                let target = targets[targetKey]
+                if (targetKey === 'build') {
+                    hasBuild = true
+                }
                 if (target.executor === '@nx/vite:build') {
-                    hasViteBuild = true
-                    target.options = {
-                        outputPath: target.options.outputPath,
-                        generatePackageJson: true,
-                        includeDevDependenciesInPackageJson: true,
+                    // add .babelrc
+                    tree.write(
+                        path.join(projectRoot, '.babelrc'),
+                        JSON.stringify(
+                            {
+                                presets: [
+                                    [
+                                        '@nx/react/babel',
+                                        {
+                                            runtime: 'automatic',
+                                            useBuiltIns: 'usage',
+                                            importSource: '@emotion/react',
+                                        },
+                                    ],
+                                ],
+                                plugins: ['@emotion/babel-plugin'],
+                            },
+                            null,
+                            2,
+                        ),
+                    )
+                    // add jest.config.ts
+                    tree.write(
+                        path.join(projectRoot, 'jest.config.ts'),
+                        `/* eslint-disable */
+export default {
+  displayName: '${projectName}',
+  preset: '../../jest.preset.js',
+  transform: {
+    '^(?!.*\\\\.(js|jsx|ts|tsx|css|json)$)': '@nx/react/plugins/jest',
+    '^.+\\\\.[tj]sx?$': ['babel-jest', { presets: ['@nx/react/babel'] }],
+  },
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  coverageDirectory: '../../coverage/${projectRoot}',
+};
+`,
+                    )
+                    // replace tsconfig.spec.json
+                    tree.write(
+                        path.join(projectRoot, 'tsconfig.spec.json'),
+                        JSON.stringify(
+                            {
+                                extends: './tsconfig.json',
+                                compilerOptions: {
+                                    outDir: '../../dist/out-tsc',
+                                    module: 'commonjs',
+                                    types: ['jest', 'node'],
+                                },
+                                include: [
+                                    'jest.config.ts',
+                                    'src/**/*.test.ts',
+                                    'src/**/*.spec.ts',
+                                    'src/**/*.test.tsx',
+                                    'src/**/*.spec.tsx',
+                                    'src/**/*.test.js',
+                                    'src/**/*.spec.js',
+                                    'src/**/*.test.jsx',
+                                    'src/**/*.spec.jsx',
+                                    'src/**/*.d.ts',
+                                ],
+                            },
+                            null,
+                            2,
+                        ),
+                    )
+
+                    target = {
+                        executor: '@nx/rollup:rollup',
+                        outputs: ['{options.outputPath}'],
+                        options: {
+                            outputPath: target.options.outputDir,
+                            tsConfig: `${projectRoot}/tsconfig.lib.json`,
+                            project: `${projectRoot}/package.json`,
+                            entryFile: `${projectRoot}/src/index.ts`,
+                            external: ['react', 'react-dom', 'react/jsx-runtime'],
+                            rollupConfig: '@nx/react/plugins/bundle-rollup',
+                            compiler: 'tsc',
+                            assets: [
+                                {
+                                    glob: `${projectRoot}/README.md`,
+                                    input: '.',
+                                    output: '.',
+                                },
+                                {
+                                    glob: `${projectRoot}/CHANGELOG.md`,
+                                    input: '.',
+                                    output: '.',
+                                },
+                            ],
+                        },
                     }
                 }
+
                 project.targets[targetKey] = target
             }
 
-            if (hasViteBuild) {
+            if (hasBuild) {
+                const outputPath = targets['build'].options.outputPath
+                if (!outputPath) {
+                    return
+                }
                 project.targets['static:server'] = {
-                    executor: '@nx/vite:preview-server',
+                    executor: 'nx:run-commands',
                     options: {
-                        buildTarget: `${projectsKey}:build`,
-                        host: true,
-                        watch: true,
+                        commands: [
+                            `pnpm nx run ${projectName}:build`,
+                            `http-server ${outputPath} -p ${startPort++} -d -i -g -b --cors -c-1 --log-ip --utc-time`,
+                        ],
+                        parallel: true,
                     },
                 }
             }
 
-            updateProjectConfiguration(tree, projectsKey, project)
+            updateProjectConfiguration(tree, projectName, project)
         }
     }
 
