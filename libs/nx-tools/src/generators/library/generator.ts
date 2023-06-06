@@ -27,9 +27,53 @@ export async function libraryGenerator(tree: Tree) {
                 if (targetKey === 'build') {
                     hasBuild = true
                 }
+
+                if (target.executor === '@nx/rollup:rollup') {
+                    project.targets[targetKey].executor = '@nx/vite:build'
+                    project.targets[targetKey].options = {
+                        ...project.targets[targetKey].options,
+                        compiler: 'tsc',
+                        format: ['esm', 'cjs'],
+                        buildableProjectDepsInPackageJsonType: 'dependencies',
+                        updateBuildableProjectDepsInPackageJson: true,
+                        generateExportsField: true,
+                        assets: [
+                            {
+                                glob: `${projectRoot}/README.md`,
+                                input: '.',
+                                output: '.',
+                            },
+                            {
+                                glob: `${projectRoot}/CHANGELOG.md`,
+                                input: '.',
+                                output: '.',
+                            },
+                        ],
+                    }
+                }
+
                 if (target.executor === '@nx/vite:build') {
-                    // has .babelrc remove it
-                    tree.delete(path.join(projectRoot, '.babelrc'))
+                    // add .babelrc
+                    tree.write(
+                        path.join(projectRoot, '.babelrc'),
+                        JSON.stringify(
+                            {
+                                presets: [
+                                    [
+                                        '@nx/react/babel',
+                                        {
+                                            runtime: 'automatic',
+                                            useBuiltIns: 'usage',
+                                            importSource: '@emotion/react',
+                                        },
+                                    ],
+                                ],
+                                plugins: ['@emotion/babel-plugin'],
+                            },
+                            null,
+                            2,
+                        ),
+                    )
                     // add jest.config.ts
                     tree.write(
                         path.join(projectRoot, 'jest.config.ts'),
