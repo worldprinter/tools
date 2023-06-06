@@ -90,6 +90,8 @@ export default {
                             2,
                         ),
                     )
+                    // remove vite.config.ts
+                    tree.delete(path.join(projectRoot, 'vite.config.ts'))
 
                     target = {
                         executor: '@nx/rollup:rollup',
