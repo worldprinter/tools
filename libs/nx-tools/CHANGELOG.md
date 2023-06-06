@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.5.0](https://github.com/worldprinter/tools/compare/v0.4.0...v0.5.0) (2023-06-06)
+
+
+### Features
+
+* remove vite config ([5ba7a14](https://github.com/worldprinter/tools/commit/5ba7a146cffca88c243ba359ee0202b8f541d7c3))
+
 ## [0.4.0](https://github.com/worldprinter/tools/compare/v0.3.0...v0.4.0) (2023-06-06)
 
 
