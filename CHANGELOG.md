@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.4.0](https://github.com/worldprinter/tools/compare/v0.3.0...v0.4.0) (2023-06-06)
+
+
+### Features
+
+* migrate vite to rollup ([b0699f0](https://github.com/worldprinter/tools/commit/b0699f008ad1164abd4266fb905e2c3ba8196737))
+
 ## [0.3.0](https://github.com/worldprinter/tools/compare/v0.2.0...v0.3.0) (2023-05-26)
 
 
