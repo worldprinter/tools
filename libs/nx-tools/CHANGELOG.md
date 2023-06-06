@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+### [0.7.1](https://github.com/worldprinter/tools/compare/v0.7.0...v0.7.1) (2023-06-06)
+
+
+### Bug Fixes
+
+* save project.json ([4cead05](https://github.com/worldprinter/tools/commit/4cead0502eec4e4015492878e4d891aa03269519))
+
 ## [0.7.0](https://github.com/worldprinter/tools/compare/v0.6.0...v0.7.0) (2023-06-06)
 
 
