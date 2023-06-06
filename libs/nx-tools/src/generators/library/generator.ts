@@ -7,7 +7,10 @@ let startPort = 4500
 
 export async function libraryGenerator(tree: Tree) {
     const projects = getProjects(tree)
-    for (const projectName of [...projects.keys()]) {
+
+    const projectNames = [...projects.keys()]
+
+    projectNames.forEach((projectName) => {
         const project = projects.get(projectName)
         if (project && project.projectType === 'library') {
             const projectRoot = project.root
@@ -142,7 +145,7 @@ export default {
 
             updateProjectConfiguration(tree, projectName, project)
         }
-    }
+    })
 
     await formatFiles(tree)
 }
