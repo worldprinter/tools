@@ -107,6 +107,10 @@ export default {
                             external: ['react', 'react-dom', 'react/jsx-runtime'],
                             rollupConfig: '@nx/react/plugins/bundle-rollup',
                             compiler: 'tsc',
+                            format: ['esm', 'cjs'],
+                            buildableProjectDepsInPackageJsonType: 'dependencies',
+                            updateBuildableProjectDepsInPackageJson: true,
+                            generateExportsField: true,
                             assets: [
                                 {
                                     glob: `${projectRoot}/README.md`,
