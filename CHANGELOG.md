@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.8.0](https://github.com/worldprinter/tools/compare/v0.7.1...v0.8.0) (2023-06-06)
+
+
+### Features
+
+* use tsc build in rollup ([33cace2](https://github.com/worldprinter/tools/commit/33cace2226882b70a36f20815e2616d060b1e3c1))
+
 ### [0.7.1](https://github.com/worldprinter/tools/compare/v0.7.0...v0.7.1) (2023-06-06)
 
 
