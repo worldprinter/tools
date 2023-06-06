@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.7.0](https://github.com/worldprinter/tools/compare/v0.6.0...v0.7.0) (2023-06-06)
+
+
+### Features
+
+* add library logic ([a8c1ae1](https://github.com/worldprinter/tools/commit/a8c1ae154c3bee16fa6984bdd2f05609d046679e))
+
 ## [0.6.0](https://github.com/worldprinter/tools/compare/v0.5.0...v0.6.0) (2023-06-06)
 
 
