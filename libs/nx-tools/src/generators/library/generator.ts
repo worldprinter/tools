@@ -9,7 +9,7 @@ export async function libraryGenerator(tree: Tree) {
     const projects = getProjects(tree)
     for (const projectName of [...projects.keys()]) {
         const project = projects.get(projectName)
-        if (project) {
+        if (project && project.projectType === 'library') {
             const projectRoot = project.root
             const eslintConfigPath = path.join(projectRoot, '.eslintrc.json')
             const eslintConfig = JSON.parse(tree.read(eslintConfigPath).toString('utf-8'))
