@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.12.0](https://github.com/worldprinter/tools/compare/v0.11.0...v0.12.0) (2023-06-07)
+
+
+### Features
+
+* add watch ([229b1f9](https://github.com/worldprinter/tools/commit/229b1f9f79616affaf47406c862832c05adaa5f6))
+
 ## [0.11.0](https://github.com/worldprinter/tools/compare/v0.10.0...v0.11.0) (2023-06-07)
 
 
