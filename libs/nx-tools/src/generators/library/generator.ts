@@ -58,7 +58,7 @@ export async function libraryGenerator(tree: Tree) {
                         executor: 'nx:run-commands',
                         options: {
                             commands: [
-                                `pnpm nx run ${projectName}:build`,
+                                `pnpm nx run ${projectName}:build --watch`,
                                 `http-server ${outputPath} -p ${startPort++} -d -i -g -b --cors -c-1 --log-ip --utc-time`,
                             ],
                             parallel: true,
