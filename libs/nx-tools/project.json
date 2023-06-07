@@ -43,7 +43,8 @@
                 "lintFilePatterns": [
                     "libs/nx-tools/**/*.ts",
                     "libs/nx-tools/package.json",
-                    "libs/nx-tools/generators.json"
+                    "libs/nx-tools/generators.json",
+                    "libs/nx-tools/executors.json"
                 ]
             }
         },

@@ -1,14 +1,14 @@
 {
-  "generators": {
-    "workspace": {
-      "factory": "./src/generators/workspace/generator",
-      "schema": "./src/generators/workspace/schema.json",
-      "description": "同步工作区配置"
-    },
-    "library": {
-      "factory": "./src/generators/library/generator",
-      "schema": "./src/generators/library/schema.json",
-      "description": "同步发布包"
+    "generators": {
+        "workspace": {
+            "factory": "./src/generators/workspace/generator",
+            "schema": "./src/generators/workspace/schema.json",
+            "description": "同步工作区配置"
+        },
+        "library": {
+            "factory": "./src/generators/library/generator",
+            "schema": "./src/generators/library/schema.json",
+            "description": "同步发布包"
+        }
     }
-  }
 }
